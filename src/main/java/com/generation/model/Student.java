@@ -44,15 +44,20 @@ public class Student
     }
 
     // CHALLENGE IMPLEMENTATION: Read README.md to find instructions on how to solve.
-    public List<Course> findPassedCourses(Course course) {
-        //TODO implement this method
+    // public List<Course> findPassedCourses(Course course) {
+    //TODO implement this method - Challenge yourself
+    // Obtain a list of courses that student has obtained and passed with grade of at least 50
+    public List<Course> findPassedCourses() {
+        // If student's approvedCourses (courses student enrolled) is not empty
         if (approvedCourses.isEmpty()) {
             System.out.println("The student has not enrolled into any course");
             return null;
         } else {
-            for (Course courseE: courseGrade.keySet()) {
+            // Iterate through "courseGrade" (hashmap to contain enrolled course + grade)
+            for (Course courseE : courseGrade.keySet()) {
+                // Compare against min_grade (value of 50), and if >=50, add to courses list.
                 if (courseGrade.get(courseE) >= min_grade) {
-                    courses.add(course);
+                    courses.add(courseE);
                 }
             }
             return courses;
@@ -71,7 +76,7 @@ public class Student
         if (approvedCourses.containsKey(courseCode)) {
             Course course = approvedCourses.get(courseCode);
             courseGrade.put(course, grade);
-            System.out.println(course+" graded with "+grade+"/100.");
+            System.out.println(course + " graded with " + grade + "/100.");
         }
     }
 

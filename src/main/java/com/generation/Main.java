@@ -45,9 +45,15 @@ public class Main {
                 case 8:
                     showEnrolledStudents(courseService, scanner);
                     break;
+                case 9:
+                    showPassedCourse(studentService, scanner);
+                    break;
+                case 10:
+                    checkCourseApproved(studentService, courseService, scanner);
+                    break;
             }
         }
-        while (option != 9);
+        while (option != 11);
     }
 
     private static void enrollStudentToCourse(StudentService studentService, CourseService courseService,
@@ -101,7 +107,7 @@ public class Main {
         System.out.println("Insert student ID: ");
         String studentId = scanner.next();
         Student student = studentService.findStudent(studentId);
-        System.out.println("Grading: " + student+"\n");
+        System.out.println("Grading: " + student + "\n");
         if (student.getApprovedCourses() != null) {
             System.out.println("Course(s) enrolled:");
             for (Course course : student.getApprovedCourses()) {
@@ -117,7 +123,7 @@ public class Main {
                     System.out.println("Insert grade (1-100): ");
                     try {
                         grade = Integer.parseInt(scanner.next());
-                        if (grade>=1 && grade <= 100){
+                        if (grade >= 1 && grade <= 100) {
                             success = true;
                         }
                     } catch (NumberFormatException ex) {
@@ -145,5 +151,21 @@ public class Main {
             throws ParseException {
         Student student = PrinterHelper.createStudentMenu(scanner);
         studentService.subscribeStudent(student);
+    }
+
+    private static void showPassedCourse(StudentService studentService, Scanner scanner) {
+        System.out.println("Enter student ID: ");
+        String studentId = scanner.next();
+        Student student = studentService.findStudent(studentId);
+        studentService.passedCourses(student);
+    }
+    public static void checkCourseApproved(StudentService studentService, CourseService courseService, Scanner scanner) {
+        System.out.println("Enter student ID: ");
+        String studentId = scanner.next();
+        Student student = studentService.findStudent(studentId);
+        System.out.println("Insert course ID");
+        String courseID = scanner.next();
+        Course course = courseService.getCourse(courseID);
+        studentService.isCourseApproved(student, course);
     }
 }

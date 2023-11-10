@@ -56,10 +56,13 @@ public class CourseService {
 
     public void showEnrolledStudents(String courseId) {
         if (enrolledStudents.containsKey(courseId)) {
+            System.out.println("List of students enrolled\n------------------------------");
             List<Student> students = enrolledStudents.get(courseId);
             for (Student student : students) {
                 System.out.println(student);
             }
+        } else {
+            System.out.println("There is no student enrolled.\n");
         }
     }
 
@@ -85,6 +88,7 @@ public class CourseService {
         // Create and initialise sumGrade to 0.
         int sumGrade = 0;
         int incrementer = 0;
+        // If there are students enrolled
         if (enrolledStudents.containsKey(course.getCode())) {
             // Find the list of students that are enrolled in the course
             List<Student> students = enrolledStudents.get(course.getCode());
@@ -101,12 +105,18 @@ public class CourseService {
                 }
             }
             // Casting to double for floating-point division
-            double average = (double) sumGrade / incrementer;
-            // Create a DecimalFormat instance to format output of average, i.e. to have 1 decimal point
-            DecimalFormat df = new DecimalFormat("#.#");
-            // Format average
-            String formattedAverage = df.format(average);
-            System.out.println("Course code: " + course.getCode() + ": " + course.getName() + "'s average grade of all students is: " + formattedAverage + ".\n");
+            if (sumGrade != 0 && incrementer != 0) {
+                double average = (double) sumGrade / incrementer;
+                // Create a DecimalFormat instance to format output of average
+                DecimalFormat df = new DecimalFormat("#.0");
+                // Format average
+                String formattedAverage = df.format(average);
+                System.out.println("Course code: " + course.getCode() + ": " + course.getName() + "'s average grade of all students is: " + formattedAverage + ".\n");
+            } else {
+                System.out.println("No student enrolled in " + course.getName() + " has been graded.\n");
+            }
+        } else {
+            System.out.println("There is no student enrolled.\n");
         }
     }
 }
