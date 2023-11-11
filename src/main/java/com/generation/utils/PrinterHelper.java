@@ -25,7 +25,8 @@ public class PrinterHelper {
         System.out.println("| . 8 Show Enrolled Students           |");
         System.out.println("| . 9 Show Passed Courses              |");
         System.out.println("| . 10 Check Student Course Enrolment  |");
-        System.out.println("| . 11 Exit                            |");
+        System.out.println("| . 11 Check if Student Passed Course  |");
+        System.out.println("| . 12 Exit                            |");
         System.out.println("|--------------------------------------|");
     }
 

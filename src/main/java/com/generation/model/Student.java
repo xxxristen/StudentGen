@@ -23,6 +23,7 @@ public class Student
         super(id, name, email, birthDate);
     }
 
+    // Option 4
     public void enrollToCourse(Course course) {
         //TODO implement this method
         //TODO 1. 'put' the course to student's approvedCourses aka HashMap<code, course> via registerApprovedCourse
@@ -44,15 +45,50 @@ public class Student
     }
 
     // CHALLENGE IMPLEMENTATION: Read README.md to find instructions on how to solve.
-    // public List<Course> findPassedCourses(Course course) {
     //TODO implement this method - Challenge yourself
-    // Obtain a list of courses that student has obtained and passed with grade of at least 50
-    public List<Course> findPassedCourses() {
+    // Too ambiguous so I've split this challenge into 2 methods - findPassedCourses and findPassedCoursesList
+    //
+    // Option 11
+    // Take in 1 course to check if student has obtained and passed with grade of at least 50
+    public List<Course> findPassedCourses(Course course) {
         // If student's approvedCourses (courses student enrolled) is not empty
         if (approvedCourses.isEmpty()) {
-            System.out.println("The student has not enrolled into any course");
-            return null;
+            System.out.println("The student is not enrolled into any course.");
+            courses.clear();
         } else {
+            // If student is enrolled into course and course is found with courseGrade, i.e student has been graded for course
+            if (isCourseApproved(course.getCode()) && courseGrade.containsKey(course)) {
+                // Find course (parameter taken in) in "courseGrade" (hashmap to contain enrolled course + grade)
+                if (courseGrade.get(course) >= min_grade) {
+                    // Add course to courses, if grade is at least 50 (min_grade)
+                    courses.add(course);
+                }
+//                // Grade is lower than min_grade
+//                else {
+//                    courses.clear();
+//                }
+            } else if (isCourseApproved(course.getCode()) && !courseGrade.containsKey(course)) {
+                System.out.println("Student is enrolled but has not been graded.");
+            } else {
+                System.out.println("Student is not enrolled into course");
+            }
+        }
+        return courses;
+    }
+
+    // Option 9
+    // CHALLENGE IMPLEMENTATION: Read README.md to find instructions on how to solve.
+    // public List<Course> findPassedCourses(Course course) {
+    //TODO implement this method - Challenge yourself
+    // Return a list of courses that student has obtained and passed with grade of at least 50
+    public List<Course> findPassedCoursesList() {
+        // If student's approvedCourses (courses student enrolled) is not empty
+        if (approvedCourses.isEmpty()) {
+            System.out.println("The student has not enrolled into any course.");
+        }
+        // Student has enrolled into course(s)
+        else {
+            courses.clear();
             // Iterate through "courseGrade" (hashmap to contain enrolled course + grade)
             for (Course courseE : courseGrade.keySet()) {
                 // Compare against min_grade (value of 50), and if >=50, add to courses list.
@@ -60,8 +96,11 @@ public class Student
                     courses.add(courseE);
                 }
             }
-            return courses;
+            if (courses.isEmpty()) {
+                System.out.println("Student did not pass any course.");
+            }
         }
+        return courses;
     }
 
     public boolean isAttendingCourse(String courseCode) {
@@ -73,10 +112,13 @@ public class Student
 
     // Grade student (1-100) for the enrolled course
     public void gradeCourse(String courseCode, int grade) {
-        if (approvedCourses.containsKey(courseCode)) {
+        // If student is attending course
+        if (isAttendingCourse(courseCode)) {
             Course course = approvedCourses.get(courseCode);
             courseGrade.put(course, grade);
             System.out.println(course + " graded with " + grade + "/100.");
+        } else {
+            System.out.println("Student is not enrolled into course.");
         }
     }
 
@@ -91,7 +133,7 @@ public class Student
         //TODO 1. Hint, where do the list of courses come from?
         if (approvedCourses.isEmpty()) {
             System.out.println("Student is not enrolled into any course.");
-            return null;
+            return List.of();
         } else {
             return new ArrayList<Course>(approvedCourses.values());
         }

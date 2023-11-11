@@ -11,10 +11,12 @@ public class StudentService {
 
     private final Map<String, Student> students = new HashMap<>();
 
+    // Option 1
     public void subscribeStudent(Student student) {
         students.put(student.getId(), student);
     }
 
+    // Option 2
     public Student findStudent(String studentId) {
         if (students.containsKey(studentId)) {
             return students.get(studentId);
@@ -27,6 +29,19 @@ public class StudentService {
         return (students.containsKey(studentId));
     }
 
+    // Option 3
+    public void gradeStudent(Student student, Course course, int grade) {
+        student.gradeCourse(course.getCode(), grade);
+    }
+
+    // Option 4
+    public void enrollToCourse(String studentId, Course course) {
+        if (students.containsKey(studentId)) {
+            students.get(studentId).enrollToCourse(course);
+        }
+    }
+
+    // Option 5
     public void showSummary() {
         //TODO implement
         // Show students summary
@@ -39,9 +54,9 @@ public class StudentService {
                 System.out.println("Student ID: " + studentE.getId());
                 System.out.println("Student name " + studentE.getName());
                 System.out.println("Student's DOB: " + studentE.getBirthDate() + "\n");
-                System.out.println("Courses enrolled: ");
                 // If student is enrolled in course(s) - print course details
                 if (!studentE.getApprovedCourses().isEmpty()) {
+                    System.out.println("Courses enrolled: ");
                     for (Course i : studentE.getApprovedCourses()) {
                         if (!studentE.courseGrade.isEmpty() && studentE.courseGrade.containsKey(i)) {
                             System.out.println("Course: " + i.getCode() + " - " + i.getName() + " (Grade: " + studentE.courseGrade.get(i) + ")");
@@ -58,31 +73,33 @@ public class StudentService {
 
     }
 
-    public void enrollToCourse(String studentId, Course course) {
-        if (students.containsKey(studentId)) {
-            students.get(studentId).enrollToCourse(course);
-        }
-    }
-
-    public void gradeStudent(Student student, Course course, int grade) {
-        student.gradeCourse(course.getCode(), grade);
-    }
-
+    // Option 9
     public void passedCourses(Student student) {
-        List<Course> courses = student.findPassedCourses();
-        System.out.println(student.getName() + " (Student ID: " + student.getId() + ") has passed: ");
-        for (Course course : courses) {
-            System.out.println("- " + course.getCode() + " - " + course.getName());
+        List<Course> courses = student.findPassedCoursesList();
+        if (!courses.isEmpty()) {
+            System.out.println(student.getName() + " (Student ID: " + student.getId() + ") has passed: ");
+            for (Course course : courses) {
+                System.out.println("- " + course.getCode() + " - " + course.getName());
+            }
         }
-        System.out.println("\n");
     }
 
+    // Option 10
     public void isCourseApproved(Student student, Course course) {
         if (student.isCourseApproved(course.getCode())) {
             System.out.println(student.getName() + "(Student ID: " + student.getId() + ") application to \"" + course.getCode() + " - " + course.getName() + "\" has been approved.\n");
+        } else {
+            System.out.println("Course is not within the student's approved courses.\n");
         }
-        else {
-            System.out.println("Course is not within the student's approved course.\n");
+    }
+
+    // Option 11
+    public void passedCourse(Student student, Course course) {
+        List<Course> courses = student.findPassedCourses(course);
+        if (courses.contains(course)) {
+            System.out.println(student.getName() + " (Student ID: " + student.getId() + ") has passed " + course.getCode() + ".\n");
+        } else {
+            System.out.println(student.getName() + " (Student ID: " + student.getId() + ") did not pass " + course.getCode() + ".\n");
         }
     }
 }

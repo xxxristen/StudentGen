@@ -14,4 +14,4 @@ This is my GitHub repository for my Java assessment.
 
 **3. What would make your experience with this assessment better?**
 
-   More elaboration on the methods to be implemented, would be appreciated.
+   More elaboration on the methods to be implemented, would be appreciated. E.g. under "Challenge yourself", there's a method to be implemented: <code>public List&lt;Course&gt; findPassedCourses( Course course )</code>. As there is no information/explanation available on the method, I would interpret that the method is to return a list of passed courses. However, the parameter (take in Course course) seems to conflicted with that, so I'm confused by that.
