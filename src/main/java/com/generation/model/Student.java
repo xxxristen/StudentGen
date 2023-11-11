@@ -54,8 +54,8 @@ public class Student
         // If student's approvedCourses (courses student enrolled) is not empty
         if (approvedCourses.isEmpty()) {
             System.out.println("The student is not enrolled into any course.");
-            courses.clear();
         } else {
+            courses.clear();
             // If student is enrolled into course and course is found with courseGrade, i.e student has been graded for course
             if (isCourseApproved(course.getCode()) && courseGrade.containsKey(course)) {
                 // Find course (parameter taken in) in "courseGrade" (hashmap to contain enrolled course + grade)
@@ -82,7 +82,7 @@ public class Student
     //TODO implement this method - Challenge yourself
     // Return a list of courses that student has obtained and passed with grade of at least 50
     public List<Course> findPassedCoursesList() {
-        // If student's approvedCourses (courses student enrolled) is not empty
+        // If student's approvedCourses (courses student enrolled) is empty
         if (approvedCourses.isEmpty()) {
             System.out.println("The student has not enrolled into any course.");
         }

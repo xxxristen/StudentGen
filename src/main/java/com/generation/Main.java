@@ -59,14 +59,14 @@ public class Main {
         while (option != 12);
     }
 
-    // Option 1
+    // Option 1 - Register Student
     private static void registerStudent(StudentService studentService, Scanner scanner)
             throws ParseException {
         Student student = PrinterHelper.createStudentMenu(scanner);
         studentService.subscribeStudent(student);
     }
 
-    // Option 2
+    // Option 2 - Find Student
     private static void findStudent(StudentService studentService, Scanner scanner) {
         System.out.println("Enter student ID: ");
         String studentId = scanner.next();
@@ -79,7 +79,7 @@ public class Main {
         }
     }
 
-    // Option 3
+    // Option 3 - Grade Student
     // Prompt for input on student and course to grade
     private static void gradeStudent(StudentService studentService, Scanner scanner) {
         int grade = 0;
@@ -89,6 +89,7 @@ public class Main {
         // If student is found
         if (student != null) {
             System.out.println("Grading: " + student + "\n");
+            // If student has enrolled into course(s)
             if (!student.getApprovedCourses().isEmpty()) {
                 System.out.println("Course(s) enrolled:");
                 for (Course course : student.getApprovedCourses()) {
@@ -98,7 +99,7 @@ public class Main {
                 String courseCode = scanner.next();
                 CourseService courseService = new CourseService();
                 Course course = courseService.getCourse(courseCode);
-                // If student is attending course
+                // If student is attending the course to be graded
                 if (student.isAttendingCourse(courseCode)) {
                     boolean success = false;
                     // Do while loop until user input a grade of 1 - 100
@@ -114,8 +115,9 @@ public class Main {
                         }
                     } while (!success);
                     studentService.gradeStudent(student, course, grade);
-                    // If student is not attending course
-                } else System.out.println("Student is not enrolled into the course.");
+                }
+                // If student is not attending course to be graded
+                else System.out.println("Student is not enrolled into the course.");
             }
         }
         // If student is not found
@@ -124,7 +126,7 @@ public class Main {
         }
     }
 
-    // Option 4
+    // Option 4 - Enroll Student to Course
     private static void enrollStudentToCourse(StudentService studentService, CourseService courseService,
                                               Scanner scanner) {
         System.out.println("Insert student ID");
@@ -149,17 +151,17 @@ public class Main {
 
     }
 
-    // Option 5
+    // Option 5 - Show Students Summary
     private static void showStudentsSummary(StudentService studentService, Scanner scanner) {
         studentService.showSummary();
     }
 
-    // Option 6
+    // Option 6 - Show Courses Summary
     private static void showCoursesSummary(CourseService courseService, Scanner scanner) {
         courseService.showSummary();
     }
 
-    // Option 7
+    // Option 7 - Show Course Average Grade
     // Challenge yourself - Implement an additional feature in the menu options that will display the average grade of all the students subscribed to a given course.
     private static void showCourseAverage(CourseService courseService, Scanner scanner) {
         System.out.println("Insert course ID");
@@ -168,14 +170,14 @@ public class Main {
         courseService.showAverage(course);
     }
 
-    // Option 8
+    // Option 8 - Show Enrolled Students
     private static void showEnrolledStudents(CourseService courseService, Scanner scanner) {
         System.out.println("Insert course ID");
         String courseID = scanner.next();
         courseService.showEnrolledStudents(courseID);
     }
 
-    // Option 9
+    // Option 9 - Show Passed Courses
     private static void showPassedCourse(StudentService studentService, Scanner scanner) {
         System.out.println("Enter student ID: ");
         String studentId = scanner.next();
@@ -187,7 +189,7 @@ public class Main {
         }
     }
 
-    // Option 10
+    // Option 10 - Check Student Course Enrolment
     public static void checkCourseApproved(StudentService studentService, CourseService courseService, Scanner scanner) {
         System.out.println("Enter student ID: ");
         String studentId = scanner.next();
@@ -202,7 +204,7 @@ public class Main {
         }
     }
 
-    // Option 11
+    // Option 11 - Check if Student Passed Course
     public static void checkCoursePassed(StudentService studentService, CourseService courseService, Scanner scanner) {
         System.out.println("Enter student ID: ");
         String studentId = scanner.next();

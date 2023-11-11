@@ -82,7 +82,7 @@ public class CourseService {
             }
         }
     }
-
+    //  Option 7 - Show Course Average Grade
     // Challenge yourself - Implement an additional feature in the menu options that will display the average grade of all the students subscribed to a given course.
     public void showAverage(Course course) {
         // Create and initialise sumGrade to 0.
@@ -90,7 +90,7 @@ public class CourseService {
         int incrementer = 0;
         // If there are students enrolled
         if (enrolledStudents.containsKey(course.getCode())) {
-            // Find the list of students that are enrolled in the course
+            // Find the list of students that are enrolled into the course
             List<Student> students = enrolledStudents.get(course.getCode());
             // For each student, get the key and value of student's coursegrade
             for (Student student : students) {

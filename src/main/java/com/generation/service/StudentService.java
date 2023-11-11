@@ -11,12 +11,12 @@ public class StudentService {
 
     private final Map<String, Student> students = new HashMap<>();
 
-    // Option 1
+    // Option 1 - Register Student
     public void subscribeStudent(Student student) {
         students.put(student.getId(), student);
     }
 
-    // Option 2
+    // Option 2 - Find Student
     public Student findStudent(String studentId) {
         if (students.containsKey(studentId)) {
             return students.get(studentId);
@@ -29,19 +29,19 @@ public class StudentService {
         return (students.containsKey(studentId));
     }
 
-    // Option 3
+    // Option 3 - Grade Student
     public void gradeStudent(Student student, Course course, int grade) {
         student.gradeCourse(course.getCode(), grade);
     }
 
-    // Option 4
+    // Option 4 - Enroll Student to Course
     public void enrollToCourse(String studentId, Course course) {
         if (students.containsKey(studentId)) {
             students.get(studentId).enrollToCourse(course);
         }
     }
 
-    // Option 5
+    // Option 5 - Show Students Summary
     public void showSummary() {
         //TODO implement
         // Show students summary
@@ -57,10 +57,14 @@ public class StudentService {
                 // If student is enrolled in course(s) - print course details
                 if (!studentE.getApprovedCourses().isEmpty()) {
                     System.out.println("Courses enrolled: ");
+                    // Iterate through student's list of approved courses
                     for (Course i : studentE.getApprovedCourses()) {
+                        // If the course has been graded, print course code + name + grade
                         if (!studentE.courseGrade.isEmpty() && studentE.courseGrade.containsKey(i)) {
                             System.out.println("Course: " + i.getCode() + " - " + i.getName() + " (Grade: " + studentE.courseGrade.get(i) + ")");
-                        } else {
+                        }
+                        // If the course has not been graded, just print course code + name
+                        else {
                             System.out.println("Course: " + i.getCode() + " - " + i.getName());
                         }
                     }
@@ -73,7 +77,7 @@ public class StudentService {
 
     }
 
-    // Option 9
+    // Option 9 - Show Passed Courses
     public void passedCourses(Student student) {
         List<Course> courses = student.findPassedCoursesList();
         if (!courses.isEmpty()) {
@@ -84,7 +88,7 @@ public class StudentService {
         }
     }
 
-    // Option 10
+    // Option 10 - Check Student Course Enrolment
     public void isCourseApproved(Student student, Course course) {
         if (student.isCourseApproved(course.getCode())) {
             System.out.println(student.getName() + "(Student ID: " + student.getId() + ") application to \"" + course.getCode() + " - " + course.getName() + "\" has been approved.\n");
@@ -93,7 +97,7 @@ public class StudentService {
         }
     }
 
-    // Option 11
+    // Option 11 - Check if Student Passed Course
     public void passedCourse(Student student, Course course) {
         List<Course> courses = student.findPassedCourses(course);
         if (courses.contains(course)) {
